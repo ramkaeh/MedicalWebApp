@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,8 +12,15 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDefaultIdentity<IdentityUser>
 (options => options.SignIn.RequireConfirmedAccount = true)
+   /* .AddRoles<IdentityRole>()*/
     .AddEntityFrameworkStores<WebApplication1Context>();
 builder.Services.AddRazorPages();
+/*builder.Services.AddAuthorization(options =>
+{
+    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+});*/
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
