@@ -22,7 +22,7 @@ namespace WebApplication1.Controllers
         // GET: Doctors
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Doctor.ToListAsync());
+            return View(await _context.Doctors.ToListAsync());
         }
 
         // GET: Doctors/Details/5
@@ -33,7 +33,7 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var doctor = await _context.Doctor
+            var doctor = await _context.Doctors
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (doctor == null)
             {
@@ -73,7 +73,7 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var doctor = await _context.Doctor.FindAsync(id);
+            var doctor = await _context.Doctors.FindAsync(id);
             if (doctor == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var doctor = await _context.Doctor
+            var doctor = await _context.Doctors
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (doctor == null)
             {
@@ -139,10 +139,10 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var doctor = await _context.Doctor.FindAsync(id);
+            var doctor = await _context.Doctors.FindAsync(id);
             if (doctor != null)
             {
-                _context.Doctor.Remove(doctor);
+                _context.Doctors.Remove(doctor);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace WebApplication1.Controllers
 
         private bool DoctorExists(int id)
         {
-            return _context.Doctor.Any(e => e.Id == id);
+            return _context.Doctors.Any(e => e.Id == id);
         }
     }
 }

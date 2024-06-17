@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication1.Data;
 
@@ -11,9 +12,11 @@ using WebApplication1.Data;
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(WebApplication1Context))]
-    partial class WebApplication1ContextModelSnapshot : ModelSnapshot
+    [Migration("20240615214712_2pac_changes")]
+    partial class _2pac_changes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -289,26 +292,6 @@ namespace WebApplication1.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Clinics");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Location = "Bialystok",
-                            Name = "Clinic 1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Location = "Bialystok",
-                            Name = "Clinic 2"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Location = "Warszawa",
-                            Name = "Clinic 3"
-                        });
                 });
 
             modelBuilder.Entity("WebApplication1.Models.Doctor", b =>
