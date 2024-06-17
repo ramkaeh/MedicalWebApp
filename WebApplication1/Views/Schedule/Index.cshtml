@@ -84,16 +84,15 @@
             var appointmentData = {
                 Clinic: $('#clinicSelect').val(),
                 Doctor: $('#doctorSelect').val(),
-                AppointmentDate: {
-                    Start: selectedEvent.start.format(),
-                    End: selectedEvent.end.format()
-                },
+                AppointmentDate: selectedEvent.start.format(),
+                    
+                
                 Title: selectedEvent.title
             };
 
             $.ajax({
                 type: "POST",
-                url: 'Schedule/ScheduleAppointmentAsync',
+                url: '/Schedule/ScheduleAppointmentAsync',
                 data: JSON.stringify(appointmentData),
                 contentType: "application/json; charset=utf-8",
                 success: function (response) {

@@ -75,6 +75,14 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+
+    );
+app.MapControllerRoute(
+        name: "schedule",
+        pattern: "{controller=Schedule}/{action=ScheduleAppointmentAsync}/{id?}",
+        defaults: new { controller = "Schedule", action = "ScheduleAppointmentAsync" }
+        );
+
 app.MapRazorPages();
 app.Run();
