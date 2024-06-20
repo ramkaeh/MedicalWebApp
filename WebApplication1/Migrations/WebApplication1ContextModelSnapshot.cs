@@ -290,6 +290,12 @@ namespace WebApplication1.Migrations
                         new
                         {
                             Id = 2,
+                            Location = "Białystok",
+                            Name = "Clinic 3"
+                        },
+                        new
+                        {
+                            Id = 3,
                             Location = "Warszawa",
                             Name = "Clinic 3"
                         });
@@ -368,6 +374,18 @@ namespace WebApplication1.Migrations
                     b.HasIndex("DoctorId");
 
                     b.ToTable("DoctorClinic");
+
+                    b.HasData(
+                        new
+                        {
+                            ClinicId = 1,
+                            DoctorId = 1
+                        },
+                        new
+                        {
+                            ClinicId = 2,
+                            DoctorId = 2
+                        });
                 });
 
             modelBuilder.Entity("WebApplication1.Models.Patient", b =>

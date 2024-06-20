@@ -46,15 +46,13 @@ namespace WebApplication1.Data
             new Doctor { Id = 2, Name = "Kacper 2", Surname = "Kowalski", Age = 60, Gender = "Male", Major = "Chirurg" },
             new Doctor { Id = 3, Name = "Damiano 3", Surname = "Warszawa", Age = 34, Gender = "Male", Major = "Ortopeda" }
             );
-/*
-            modelBuilder.Entity<ClinicEmployees>().HasData(
-            new ClinicEmployees { DoctorId = 1, ClinicId = 1 },
-            new ClinicEmployees { DoctorId = 1, ClinicId = 2 },
-            new ClinicEmployees { DoctorId = 2, ClinicId = 2 },
-            new ClinicEmployees { DoctorId = 3, ClinicId = 1 }
+            
+            modelBuilder.Entity<DoctorClinic>().HasData(
+            new DoctorClinic { DoctorId = 1, ClinicId = 1 },
+            new DoctorClinic { DoctorId = 2, ClinicId = 2 }
             );
 
-*/
+            
 
         }
 
