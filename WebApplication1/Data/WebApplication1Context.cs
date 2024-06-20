@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Models;
 using Microsoft.EntityFrameworkCore.SqlServer;
+using Microsoft.Extensions.Hosting;
 
 namespace WebApplication1.Data
 {
@@ -19,21 +20,41 @@ namespace WebApplication1.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            
-            modelBuilder.Entity<Doctor>()
-                .HasMany(s => s.Clinics)
-                .WithMany(c => c.Doctors)
-                .UsingEntity<Dictionary<string, object>>(
-                    "DoctorClinic",
-                    j => j.HasOne<Clinic>().WithMany().HasForeignKey("Id"),
-                    j => j.HasOne<Doctor>().WithMany().HasForeignKey("Id"));
+
+
+            modelBuilder.Entity<DoctorClinic>()
+               .HasKey(ri => new { ri.ClinicId, ri.DoctorId });
+
+            modelBuilder.Entity<DoctorClinic>()
+               .HasOne(ri => ri.Clinic)
+               .WithMany(r => r.DoctorClinics)
+               .HasForeignKey(ri => ri.ClinicId);
+
+            modelBuilder.Entity<DoctorClinic>()
+                .HasOne(ri => ri.Doctor)
+                .WithMany(i => i.DoctorClinics)
+                .HasForeignKey(ri => ri.DoctorId);
+
 
             modelBuilder.Entity<Clinic>().HasData(
-            new Clinic { Id = 1, Name = "Clinic 1", Location ="Bialystok" },
-            new Clinic { Id = 2, Name = "Clinic 2", Location = "Bialystok" },
+            new Clinic { Id = 1, Name = "Clinic 1", Location ="Bialystok"  },
+            new Clinic { Id = 2, Name = "Clinic 3", Location = "Białystok" },
             new Clinic { Id = 3, Name = "Clinic 3", Location = "Warszawa" }
             );
+            modelBuilder.Entity<Doctor>().HasData(
+            new Doctor { Id = 1, Name = "Damian 1", Surname = "Jankowski", Age=26, Gender="Male", Major="Kardiolog"},
+            new Doctor { Id = 2, Name = "Kacper 2", Surname = "Kowalski", Age = 60, Gender = "Male", Major = "Chirurg" },
+            new Doctor { Id = 3, Name = "Damiano 3", Surname = "Warszawa", Age = 34, Gender = "Male", Major = "Ortopeda" }
+            );
+/*
+            modelBuilder.Entity<ClinicEmployees>().HasData(
+            new ClinicEmployees { DoctorId = 1, ClinicId = 1 },
+            new ClinicEmployees { DoctorId = 1, ClinicId = 2 },
+            new ClinicEmployees { DoctorId = 2, ClinicId = 2 },
+            new ClinicEmployees { DoctorId = 3, ClinicId = 1 }
+            );
 
+*/
 
         }
 

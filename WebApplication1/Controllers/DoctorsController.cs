@@ -54,15 +54,26 @@ namespace WebApplication1.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Surname,age,Sex,Major")] Doctor doctor)
+        public async Task<IActionResult> Create([Bind("Id,Name,Surname,Age,Gender,Major")] Doctor doctor)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(doctor);
+
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                foreach (var error in errors)
+                {
+                    Console.WriteLine(error.ErrorMessage);  // or use a logger
+                }
+
+                // Optionally pass errors to the view
+                ViewBag.Errors = errors.Select(e => e.ErrorMessage).ToList();
+                return View(doctor);
+            }
+            
+            
+            _context.Add(doctor);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            return View(doctor);
         }
 
         // GET: Doctors/Edit/5
@@ -86,7 +97,7 @@ namespace WebApplication1.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Surname,age,Sex,Major")] Doctor doctor)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Surname,Age,Gender,Major")] Doctor doctor)
         {
             if (id != doctor.Id)
             {

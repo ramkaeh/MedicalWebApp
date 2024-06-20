@@ -5,6 +5,8 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json.Linq;
 
 namespace WebApplication1.Controllers
 {
@@ -16,7 +18,39 @@ namespace WebApplication1.Controllers
         {
             _context = context;
         }
+        
+        [HttpPost("Schedule/ScheduleAppointmentAsync")]
+        public async Task<IActionResult> ScheduleAppointmentAsync([FromBody] JObject data )
+        {
+            if(data ==null)
+            {
+                // Log the issue
+                return Json(new { success = false, message = "Model is null. Check the data sent in the request." });
+            }
+            var model = data.ToObject<AppointmentViewModel>();
 
+            
+                var appointment = new Appointment
+                {
+                    Title = model.Title,
+                    ClinicId = model.Clinic.Id,
+                        DoctorId = model.Doctor.Id,
+                    BookDate =DateTime.Now,
+                    AppointmentDate = model.AppointmentDate 
+                };
+
+                _context.Appointments.Add(appointment);
+                // Zapisanie zmian w bazie danych
+                await _context.SaveChangesAsync();
+
+                // Zwrócenie odpowiedzi JSON
+                return Json(new { success = true, message = "Appointment scheduled successfully!" });
+
+            
+
+
+            return Json(new { success = false, message = "Error " });
+        }
         public IActionResult Index()
         {
             var clinics = _context.Clinics
@@ -42,31 +76,6 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> ScheduleAppointmentAsync([FromBody] AppointmentViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var appointment = new Appointment
-                {
-                    Title = model.Title,
-                    Clinic = model.Clinic,
-                    Doctor = model.Doctor,
-                    BookDate =DateTime.Now,
-                    AppointmentDate = model.Date
-                };
-
-                _context.Appointments.Add(appointment);
-                // Zapisanie zmian w bazie danych
-                await _context.SaveChangesAsync();
-
-                // Zwrócenie odpowiedzi JSON
-                return Json(new { success = true, message = "Appointment scheduled successfully!" });
-
-            }
-
-
-            return Json(new { success = false, message = "Error 1" });
-        }
+        
     }
 }

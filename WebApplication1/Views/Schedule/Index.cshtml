@@ -3,6 +3,7 @@
 }
 
 <h2>Schedule an appointment</h2>
+<body>
 <div class="mt-4">
     <div class="form-group">
         <label for="clinicSelect">Choose clinic:</label>
@@ -41,7 +42,7 @@
     <button type="button" class="btn btn-primary" onclick="submitForm()">Submit</button>
 </div>
 
-@section Scripts {
+    @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
@@ -84,26 +85,29 @@
             var appointmentData = {
                 Clinic: $('#clinicSelect').val(),
                 Doctor: $('#doctorSelect').val(),
-                AppointmentDate: selectedEvent.start.format(),
-                    
-                
+                AppointmentDate: selectedEvent.start.format(),                                
                 Title: selectedEvent.title
             };
 
             $.ajax({
                 type: "POST",
-                url: '/Schedule/ScheduleAppointmentAsync',
+                url: '@Url.Action("ScheduleAppointmentAsync", "Schedule")',
                 data: JSON.stringify(appointmentData),
                 contentType: "application/json; charset=utf-8",
                 success: function (response) {
                     alert("Appointment scheduled successfully!");
                 },
                 error: function (xhr, status, error) {
+                    console.log(xhr);
+                    console.log(status);
+                    console.log(error);
                     alert("Error: " + error);
                 }
             });
+            
         }
     </script>
 
-   
-}
+
+    }
+</body>

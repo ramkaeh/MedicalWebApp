@@ -9,9 +9,11 @@ public class Doctor
     public string? OwnerId { get; set; }
     public string? Name { get; set; }
     public string? Surname { get; set; }
-    public int Age {  get; set; }   
+    [Range(25, 65, ErrorMessage = "Age must be between 25 and 65")]
+    public int Age {  get; set; }
+    
     public string? Gender { get; set; }
     public string? Major {  get; set; }
-    public List<Clinic> Clinics { get; set; } 
+    public List<DoctorClinic>? DoctorClinics { get; set; } 
 
 }

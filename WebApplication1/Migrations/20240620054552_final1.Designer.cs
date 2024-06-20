@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication1.Data;
 
@@ -11,9 +12,11 @@ using WebApplication1.Data;
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(WebApplication1Context))]
-    partial class WebApplication1ContextModelSnapshot : ModelSnapshot
+    [Migration("20240620054552_final1")]
+    partial class final1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -264,11 +267,11 @@ namespace WebApplication1.Migrations
 
             modelBuilder.Entity("WebApplication1.Models.Clinic", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ClinicId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClinicId"));
 
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
@@ -276,20 +279,20 @@ namespace WebApplication1.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ClinicId");
 
                     b.ToTable("Clinics");
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            ClinicId = 1,
                             Location = "Bialystok",
                             Name = "Clinic 1"
                         },
                         new
                         {
-                            Id = 2,
+                            ClinicId = 2,
                             Location = "Warszawa",
                             Name = "Clinic 3"
                         });
@@ -297,11 +300,11 @@ namespace WebApplication1.Migrations
 
             modelBuilder.Entity("WebApplication1.Models.Doctor", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("DoctorId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DoctorId"));
 
                     b.Property<int>("Age")
                         .HasColumnType("int");
@@ -321,14 +324,14 @@ namespace WebApplication1.Migrations
                     b.Property<string>("Surname")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("DoctorId");
 
                     b.ToTable("Doctors");
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            DoctorId = 1,
                             Age = 26,
                             Gender = "Male",
                             Major = "Kardiolog",
@@ -337,7 +340,7 @@ namespace WebApplication1.Migrations
                         },
                         new
                         {
-                            Id = 2,
+                            DoctorId = 2,
                             Age = 60,
                             Gender = "Male",
                             Major = "Chirurg",
@@ -346,7 +349,7 @@ namespace WebApplication1.Migrations
                         },
                         new
                         {
-                            Id = 3,
+                            DoctorId = 3,
                             Age = 34,
                             Gender = "Male",
                             Major = "Ortopeda",

@@ -21,6 +21,7 @@ builder.Services.AddRazorPages();
         .RequireAuthenticatedUser()
         .Build();
 });*/
+builder.Services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
